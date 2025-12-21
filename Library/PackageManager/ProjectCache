@@ -1,25 +1,25 @@
 m_ProjectFiles:
   m_ManifestFileStatus:
-    m_FilePath: C:/Users/weedn/gambling/Packages/manifest.json
+    m_FilePath: C:/Users/chris/Documents/GitHub/gambling-game/Packages/manifest.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 639019270781746784
-    m_Hash: 205969706
+      ticks: 639019274985796995
+    m_Hash: 667505191
   m_LockFileStatus:
-    m_FilePath: C:/Users/weedn/gambling/Packages/packages-lock.json
+    m_FilePath: C:/Users/chris/Documents/GitHub/gambling-game/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 639019270784993342
-    m_Hash: 3025046548
+      ticks: 639019274985796995
+    m_Hash: 2904195732
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
   m_LocalFileStatus: []
-m_ProjectPath: C:/Users/weedn/gambling/Packages
+m_ProjectPath: C:/Users/chris/Documents/GitHub/gambling-game/Packages
 m_EditorVersion: 6000.1.17f1 (c0b9d3899998)
 m_ResolvedPackages:
 - packageId: com.unity.multiplayer.center@1.0.0
@@ -27,7 +27,7 @@ m_ResolvedPackages:
   isDirectDependency: 1
   version: 1.0.0
   source: 2
-  resolvedPath: C:\Users\weedn\gambling\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546
+  resolvedPath: C:\Users\chris\Documents\GitHub\gambling-game\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546
   assetPath: Packages/com.unity.multiplayer.center
   name: com.unity.multiplayer.center
   displayName: Multiplayer Center
