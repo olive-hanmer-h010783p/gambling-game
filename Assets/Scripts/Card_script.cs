@@ -2,17 +2,6 @@ using UnityEngine;
 
 public class Card_script : MonoBehaviour
 {
-    //these are the locations where the cards will spawn for the player and dealer
-    public GameObject[] spawnLocationsPlayer;
-    public GameObject[] spawnLocationsDealer;
-    // this is where the deck will be located
-    public Transform deckLocation;
-
-    // this is what the cards' prefabs are so the code can take them and spawn them in the game
-    public GameObject[] cardPrefabs;
-    public GameObject hiddenCardPrefab;
-
-
     private string cardsuit;
     private string cardvalue;
     private string currentcard;
@@ -103,11 +92,6 @@ public class Card_script : MonoBehaviour
 
     }
 
-    void GetPlayercards()
-    {
-        //gets the location of the deck, make sure to remember to rememeber to rememeber to change this so it doesnt just spawn cubes
-        GameObject spawnedProjectile = Instantiate(cardPrefabs[1], deckLocation.position, Quaternion.identity);
-    }
     void Start()
     {
             currentscore = cardmaker(cardsinhand);
@@ -122,6 +106,7 @@ public class Card_script : MonoBehaviour
             Debug.Log(dealercardsinhand[0] + " dealer");
 
     }
+    
     
     void call()
     {
