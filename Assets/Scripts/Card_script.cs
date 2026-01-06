@@ -5,6 +5,7 @@ public class Card_script : MonoBehaviour
     private string cardsuit;
     private string cardvalue;
     private string currentcard;
+    private bool acereduced = false;
 
     // creates a blank hand for the player with 15 spaces as that is the max hand available without going over 21
     private string[] cardsinhand = { "N/A", "N/A", "N/A", "N/A", "N/A"};
@@ -42,12 +43,11 @@ public class Card_script : MonoBehaviour
                 cardsuit = "clubs";
                 break;
 
-            //speeve
+            //We am speeve
             default:
                 cardsuit = "speeve";
                 break;
         }
-
 
         //checks for specialised cards so that it can disply the cards properly in hand
         switch (card)
@@ -102,21 +102,6 @@ public class Card_script : MonoBehaviour
         
     }
 
-    void Start()
-    {
-
-            // create the hand for the dealer and the player using the above function.
-            currentscore += currentscore = cardmaker(cardsinhand);
-            currentscore += currentscore = cardmaker(cardsinhand);
-            dealercurrentscore = cardmaker(dealercardsinhand);
-            dealercurrentscore = cardmaker(dealercardsinhand);
-            Debug.Log("dealer has " + dealercardsinhand[0] + " " + dealercardsinhand[1] + " " + dealercardsinhand[2] + " " + dealercardsinhand[3] + " " + dealercardsinhand[4]);
-            Debug.Log("you have " + cardsinhand[0] + " " + cardsinhand[1] + " " + cardsinhand[2] + " " + cardsinhand[3] + " " + cardsinhand[4]);
-            Debug.Log(currentscore);
-
-    }
-
-
     void OnMouseDown()
     {
         if (cardsinhand[4] == "N/A" && currentscore < 21)
@@ -126,6 +111,19 @@ public class Card_script : MonoBehaviour
         else if (cardsinhand[4] != "N/A")
         {
             Debug.Log("hand is full dumb fuck");
+        }
+
+      
+
+
+        // checks list for an ace in hand as if there is an ace it can change it to low ace.
+        for (int i = 0; i < 5; i++)
+        {
+            if (cardsinhand[i] == "Ace of hearts" && currentscore > 21 || cardsinhand[i] == "Ace of diamonds" && currentscore > 21 || cardsinhand[i] == "Ace of spades" && currentscore > 21 || cardsinhand[i] == "Ace of clubs" && currentscore > 21)
+            {
+                currentscore = currentscore - 10;
+                acereduced = true;
+            }
         }
 
         Debug.Log("you have " + cardsinhand[0] + " " + cardsinhand[1] + " " + cardsinhand[2] + " " + cardsinhand[3] + " " + cardsinhand[4]);
@@ -140,10 +138,12 @@ public class Card_script : MonoBehaviour
                 dealercardsinhand[i] = "N/A";
                 currentscore = 0;
                 dealercurrentscore = 0;
+                acereduced = false;
             }
 
         }
 
+        
         if (currentscore == 21)
         {
             Debug.Log("I win YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
@@ -153,6 +153,7 @@ public class Card_script : MonoBehaviour
                 dealercardsinhand[i] = "N/A";
                 currentscore = 0;
                 dealercurrentscore = 0;
+                acereduced = false;
             }
         }
 
@@ -166,6 +167,7 @@ public class Card_script : MonoBehaviour
                 dealercardsinhand[i] = "N/A";
                 currentscore = 0;
                 dealercurrentscore = 0;
+                acereduced = false;
             }
         }
 
