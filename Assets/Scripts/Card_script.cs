@@ -6,6 +6,7 @@ public class Card_script : MonoBehaviour
     private string cardvalue;
     private string currentcard;
     private bool acereduced = false;
+    public bool standing = false;
 
     // creates a blank hand for the player with 15 spaces as that is the max hand available without going over 21
     private string[] cardsinhand = { "N/A", "N/A", "N/A", "N/A", "N/A"};
@@ -15,6 +16,17 @@ public class Card_script : MonoBehaviour
     private string[] dealercardsinhand = { "N/A", "N/A", "N/A", "N/A", "N/A"};
     private int dealercurrentscore;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void Start()
+    {
+        currentscore += currentscore = cardmaker(cardsinhand);
+        currentscore += currentscore = cardmaker(cardsinhand);
+        dealercurrentscore += dealercurrentscore = cardmaker(dealercardsinhand);
+        dealercurrentscore += dealercurrentscore = cardmaker(dealercardsinhand);
+        Debug.Log("you have " + cardsinhand[0] + " " + cardsinhand[1] + " " + cardsinhand[2] + " " + cardsinhand[3] + " " + cardsinhand[4]);
+        Debug.Log(currentscore);
+        Debug.Log("the dealer has a " + dealercardsinhand[0]);
+    }
 
     int cardmaker(string[] handcard)
     {
@@ -57,6 +69,7 @@ public class Card_script : MonoBehaviour
                 if (score + 11 > 21)
                 {
                     score += 1;
+                    acereduced = true;
                 }
                 else
                 {
@@ -85,6 +98,16 @@ public class Card_script : MonoBehaviour
                 break;
         }
 
+        // checks list for an ace in hand as if there is an ace it can change it to low ace.
+        for (int i = 0; i < 5; i++)
+        {
+            if (handcard[i] == "Ace of hearts" && score > 21 && acereduced == false || handcard[i] == "Ace of diamonds" && score > 21 && acereduced == false || handcard[i] == "Ace of spades" && score > 21 && acereduced == false || handcard[i] == "Ace of clubs" && score > 21 && acereduced == false)
+            {
+                score = score - 10;
+                acereduced = true;
+            }
+        }
+
         //create the tag for the card to hold within the players hand.(will help with the prefabs for cards later
         currentcard = cardvalue + " of " + cardsuit;
         // go my chud i
@@ -96,35 +119,18 @@ public class Card_script : MonoBehaviour
                 i = 5;
             }
         }
-        
-        return score;
-        
-        
+        return score; 
     }
 
-    void OnMouseDown()
+    public void call()
     {
-        if (cardsinhand[4] == "N/A" && currentscore < 21)
+        Debug.Log("Prick.");
+        if (cardsinhand[4] == "N/A" && currentscore < 21 && standing == false)
         {
             currentscore += currentscore = cardmaker(cardsinhand);
         }
-        else if (cardsinhand[4] != "N/A")
-        {
-            Debug.Log("hand is full dumb fuck");
-        }
 
-      
-
-
-        // checks list for an ace in hand as if there is an ace it can change it to low ace.
-        for (int i = 0; i < 5; i++)
-        {
-            if (cardsinhand[i] == "Ace of hearts" && currentscore > 21 || cardsinhand[i] == "Ace of diamonds" && currentscore > 21 || cardsinhand[i] == "Ace of spades" && currentscore > 21 || cardsinhand[i] == "Ace of clubs" && currentscore > 21)
-            {
-                currentscore = currentscore - 10;
-                acereduced = true;
-            }
-        }
+        
 
         Debug.Log("you have " + cardsinhand[0] + " " + cardsinhand[1] + " " + cardsinhand[2] + " " + cardsinhand[3] + " " + cardsinhand[4]);
         Debug.Log(currentscore);
@@ -139,11 +145,11 @@ public class Card_script : MonoBehaviour
                 currentscore = 0;
                 dealercurrentscore = 0;
                 acereduced = false;
+                standing = false;
             }
-
+            Start();
         }
 
-        
         if (currentscore == 21)
         {
             Debug.Log("I win YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
@@ -154,7 +160,9 @@ public class Card_script : MonoBehaviour
                 currentscore = 0;
                 dealercurrentscore = 0;
                 acereduced = false;
+                standing = false;
             }
+            Start();
         }
 
         if (currentscore <= 21 && cardsinhand[4] != "N/A")
@@ -168,28 +176,53 @@ public class Card_script : MonoBehaviour
                 currentscore = 0;
                 dealercurrentscore = 0;
                 acereduced = false;
+                standing = false;
             }
+            Start();
         }
-
-
-
     }
 
-    void stand()
+    public void stand()
     {
-        
-        if (dealercurrentscore > 21 || dealercurrentscore < currentscore)
+        Debug.Log(dealercardsinhand[0] + " " + dealercardsinhand[1]);
+
+        if (dealercurrentscore < 16)
         {
-            Debug.Log("the dealer has been beat and you win");
-            for (int i = 0; i < 5; i++)
+            dealercurrentscore += dealercurrentscore = cardmaker(dealercardsinhand);
+            Debug.Log("the dealers hand is " + dealercardsinhand[0] + " " + dealercardsinhand[1] + " " + dealercardsinhand[2] + " " + dealercardsinhand[3] + " " + dealercardsinhand[4]);
+            Debug.Log("Dealer Score: " + dealercurrentscore);
+            stand();
+        }
+        else
+        {
+            if (dealercurrentscore > 21 || dealercurrentscore < currentscore)
             {
-                cardsinhand[i] = "N/A";
-                dealercardsinhand[i] = "N/A";
-                currentscore = 0;
-                dealercurrentscore = 0;
+                Debug.Log("the dealer has been beat and you win");
+                for (int i = 0; i < 5; i++)
+                {
+                    cardsinhand[i] = "N/A";
+                    dealercardsinhand[i] = "N/A";
+                    currentscore = 0;
+                    dealercurrentscore = 0;
+                    acereduced = false;
+                    standing = false;
+                }
+                Start();
+            }
+            else
+            {
+                Debug.Log("you win");
+                for (int i = 0; i < 5; i++)
+                {
+                    cardsinhand[i] = "N/A";
+                    dealercardsinhand[i] = "N/A";
+                    currentscore = 0;
+                    dealercurrentscore = 0;
+                    acereduced = false;
+                    standing = false;
+                }
+                Start();
             }
         }
-        
     }
-
 }
