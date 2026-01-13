@@ -17,7 +17,7 @@ public class Card_script : MonoBehaviour
     private int dealercurrentscore;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void Start()
+    void start()
     {
         currentscore += currentscore = cardmaker(cardsinhand);
         currentscore += currentscore = cardmaker(cardsinhand);
@@ -98,15 +98,7 @@ public class Card_script : MonoBehaviour
                 break;
         }
 
-        // checks list for an ace in hand as if there is an ace it can change it to low ace.
-        for (int i = 0; i < 5; i++)
-        {
-            if (handcard[i] == "Ace of hearts" && score > 21 && acereduced == false || handcard[i] == "Ace of diamonds" && score > 21 && acereduced == false || handcard[i] == "Ace of spades" && score > 21 && acereduced == false || handcard[i] == "Ace of clubs" && score > 21 && acereduced == false)
-            {
-                score = score - 10;
-                acereduced = true;
-            }
-        }
+        
 
         //create the tag for the card to hold within the players hand.(will help with the prefabs for cards later
         currentcard = cardvalue + " of " + cardsuit;
@@ -119,7 +111,22 @@ public class Card_script : MonoBehaviour
                 i = 5;
             }
         }
-        return score; 
+
+        if (currentscore == 21)
+        {
+            Debug.Log("I win YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+            for (int i = 0; i < 5; i++)
+            {
+                cardsinhand[i] = "N/A";
+                dealercardsinhand[i] = "N/A";
+                currentscore = 0;
+                dealercurrentscore = 0;
+                acereduced = false;
+                standing = false;
+            }
+            start();
+        }
+        return score;
     }
 
     public void call()
@@ -130,7 +137,15 @@ public class Card_script : MonoBehaviour
             currentscore += currentscore = cardmaker(cardsinhand);
         }
 
-        
+        // checks list for an ace in hand as if there is an ace it can change it to low ace.
+        for (int i = 0; i < 5; i++)
+        {
+            if (cardsinhand[i] == "Ace of hearts" && currentscore > 21 && acereduced == false || cardsinhand[i] == "Ace of diamonds" && currentscore > 21 && acereduced == false || cardsinhand[i] == "Ace of spades" && currentscore > 21 && acereduced == false || cardsinhand[i] == "Ace of clubs" && currentscore > 21 && acereduced == false)
+            {
+                currentscore = currentscore - 10;
+                acereduced = true;
+            }
+        }
 
         Debug.Log("you have " + cardsinhand[0] + " " + cardsinhand[1] + " " + cardsinhand[2] + " " + cardsinhand[3] + " " + cardsinhand[4]);
         Debug.Log(currentscore);
@@ -147,22 +162,7 @@ public class Card_script : MonoBehaviour
                 acereduced = false;
                 standing = false;
             }
-            Start();
-        }
-
-        if (currentscore == 21)
-        {
-            Debug.Log("I win YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-            for (int i = 0; i < 5; i++)
-            {
-                cardsinhand[i] = "N/A";
-                dealercardsinhand[i] = "N/A";
-                currentscore = 0;
-                dealercurrentscore = 0;
-                acereduced = false;
-                standing = false;
-            }
-            Start();
+            start();
         }
 
         if (currentscore <= 21 && cardsinhand[4] != "N/A")
@@ -178,12 +178,13 @@ public class Card_script : MonoBehaviour
                 acereduced = false;
                 standing = false;
             }
-            Start();
+            start();
         }
     }
 
     public void stand()
     {
+        acereduced = false;
         Debug.Log(dealercardsinhand[0] + " " + dealercardsinhand[1]);
 
         if (dealercurrentscore < 16)
@@ -191,6 +192,15 @@ public class Card_script : MonoBehaviour
             dealercurrentscore += dealercurrentscore = cardmaker(dealercardsinhand);
             Debug.Log("the dealers hand is " + dealercardsinhand[0] + " " + dealercardsinhand[1] + " " + dealercardsinhand[2] + " " + dealercardsinhand[3] + " " + dealercardsinhand[4]);
             Debug.Log("Dealer Score: " + dealercurrentscore);
+            // checks list for an ace in dealers hand as if there is an ace it can change it to low ace.
+            for (int i = 0; i < 5; i++)
+            {
+                if (dealercardsinhand[i] == "Ace of hearts" && dealercurrentscore > 21 && acereduced == false || dealercardsinhand[i] == "Ace of diamonds" && dealercurrentscore > 21 && acereduced == false || dealercardsinhand[i] == "Ace of spades" && dealercurrentscore > 21 && acereduced == false || dealercardsinhand[i] == "Ace of clubs" && dealercurrentscore > 21 && acereduced == false)
+                {
+                    dealercurrentscore = dealercurrentscore - 10;
+                    acereduced = true;
+                }
+            }
             stand();
         }
         else
@@ -207,11 +217,11 @@ public class Card_script : MonoBehaviour
                     acereduced = false;
                     standing = false;
                 }
-                Start();
+                start();
             }
-            else
+            else if (dealercurrentscore == currentscore)
             {
-                Debug.Log("you win");
+                Debug.Log("draw you get your bet back");
                 for (int i = 0; i < 5; i++)
                 {
                     cardsinhand[i] = "N/A";
@@ -221,7 +231,23 @@ public class Card_script : MonoBehaviour
                     acereduced = false;
                     standing = false;
                 }
-                Start();
+                start();
+            }
+                
+
+            else
+            {
+                Debug.Log("you lose");
+                for (int i = 0; i < 5; i++)
+                {
+                    cardsinhand[i] = "N/A";
+                    dealercardsinhand[i] = "N/A";
+                    currentscore = 0;
+                    dealercurrentscore = 0;
+                    acereduced = false;
+                    standing = false;
+                }
+                start();
             }
         }
     }
