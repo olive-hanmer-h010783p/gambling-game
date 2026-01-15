@@ -12,22 +12,39 @@ public class MoneyManager : MonoBehaviour
     public GameObject Stand;
     public GameObject Standby_Call;
     public GameObject Standby_Stand;
+    public GameObject Bet_Panel;
+    public Card_script m_Card_script;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         Call.SetActive(false);
         Stand.SetActive(false); 
         Standby_Call.SetActive(true);
         Standby_Stand.SetActive(true);
+        Bet_Panel.SetActive(true);
     }
 
     // Update is called once per frame
 
     public void Bet()
     {
+        if (bet == 0)
+        {
+            Debug.Log("no");
+        }
+        else
+        {
+            Call.SetActive(true);
+            Stand.SetActive(true);
+            Standby_Call.SetActive(false);
+            Standby_Stand.SetActive(false);
+            Bet_Panel.SetActive(false);
+            m_Card_script.start();
+        }
 
+            
     }
 
 

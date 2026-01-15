@@ -7,6 +7,7 @@ public class Card_script : MonoBehaviour
     private string currentcard;
     private bool acereduced = false;
     public bool standing = false;
+    public MoneyManager M_Moneymanager;
 
     // creates a blank hand for the player with 15 spaces as that is the max hand available without going over 21
     private string[] cardsinhand = { "N/A", "N/A", "N/A", "N/A", "N/A"};
@@ -17,7 +18,7 @@ public class Card_script : MonoBehaviour
     private int dealercurrentscore;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    void start()
+    public void start()
     {
         currentscore += currentscore = cardmaker(cardsinhand);
         currentscore += currentscore = cardmaker(cardsinhand);
@@ -124,7 +125,10 @@ public class Card_script : MonoBehaviour
                 acereduced = false;
                 standing = false;
             }
-            start();
+            M_Moneymanager.bet = M_Moneymanager.bet * 2;
+            M_Moneymanager.playersChips = M_Moneymanager.bet;
+            M_Moneymanager.Start();
+
         }
         return score;
     }
@@ -162,7 +166,8 @@ public class Card_script : MonoBehaviour
                 acereduced = false;
                 standing = false;
             }
-            start();
+            M_Moneymanager.playersChips -= M_Moneymanager.bet;
+            M_Moneymanager.Start();
         }
 
         if (currentscore <= 21 && cardsinhand[4] != "N/A")
@@ -178,7 +183,9 @@ public class Card_script : MonoBehaviour
                 acereduced = false;
                 standing = false;
             }
-            start();
+            M_Moneymanager.bet = M_Moneymanager.bet * 2;
+            M_Moneymanager.playersChips = M_Moneymanager.bet;
+            M_Moneymanager.Start();
         }
     }
 
@@ -217,7 +224,9 @@ public class Card_script : MonoBehaviour
                     acereduced = false;
                     standing = false;
                 }
-                start();
+                M_Moneymanager.bet = M_Moneymanager.bet * 2;
+                M_Moneymanager.playersChips = M_Moneymanager.bet;
+                M_Moneymanager.Start();
             }
             else if (dealercurrentscore == currentscore)
             {
@@ -231,7 +240,7 @@ public class Card_script : MonoBehaviour
                     acereduced = false;
                     standing = false;
                 }
-                start();
+                M_Moneymanager.Start();
             }
                 
 
@@ -247,7 +256,8 @@ public class Card_script : MonoBehaviour
                     acereduced = false;
                     standing = false;
                 }
-                start();
+                M_Moneymanager.playersChips -= M_Moneymanager.bet;
+                M_Moneymanager.Start();
             }
         }
     }
